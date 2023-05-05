@@ -79,7 +79,7 @@ FROM parquet.`${da.paths.working_dir}/weather`
 
 -- TODO
 
-<FILL-IN> ${da.db_name}
+create database it not exists ${da.db_name}
 
 -- COMMAND ----------
 
@@ -105,7 +105,7 @@ FROM parquet.`${da.paths.working_dir}/weather`
 
 -- TODO
 
-<FILL-IN> ${da.db_name}
+use ${da.db_name}
 
 -- COMMAND ----------
 
@@ -130,7 +130,7 @@ FROM parquet.`${da.paths.working_dir}/weather`
 
 -- TODO
 
-<FILL-IN>
+create or replace table weather_managed as
 SELECT * 
 FROM parquet.`${da.paths.working_dir}/weather`
 
@@ -159,7 +159,7 @@ FROM parquet.`${da.paths.working_dir}/weather`
 
 -- TODO
 
-<FILL-IN>
+create or replace table weather_external 
 LOCATION "${da.paths.working_dir}/lab/external"
 AS SELECT * 
 FROM parquet.`${da.paths.working_dir}/weather`
@@ -250,7 +250,7 @@ DESCRIBE EXTENDED weather_external
 
 -- TODO
 
-<FILL_IN> ${da.db_name}
+drop database ${da.db_name} CASCADE
 
 -- COMMAND ----------
 
@@ -275,8 +275,8 @@ DESCRIBE EXTENDED weather_external
 -- COMMAND ----------
 
 -- MAGIC %python
--- MAGIC # files = dbutils.fs.ls(managedTablePath)
--- MAGIC # display(files)
+-- MAGIC files = dbutils.fs.ls(managedTablePath)
+-- MAGIC display(files)
 
 -- COMMAND ----------
 
@@ -310,7 +310,7 @@ DESCRIBE EXTENDED weather_external
 
 -- COMMAND ----------
 
-CREATE DATABASE ${da.db_name} LOCATION '${da.paths.working_dir}/${da.db_name}';
+CREATE DATABASE if not exists ${da.db_name} LOCATION '${da.paths.working_dir}/${da.db_name}';
 USE ${da.db_name};
 
 -- COMMAND ----------
@@ -324,7 +324,9 @@ USE ${da.db_name};
 
 -- TODO
 
-<FILL_IN>
+create or replace table weather_managed as
+select * 
+from parquet.`${da.paths.working_dir}/weather`
 
 -- COMMAND ----------
 
@@ -366,7 +368,7 @@ USE ${da.db_name};
 
 -- TODO
 
-<FILL-IN>
+create or replace view celcius
 AS (SELECT *
   FROM weather_managed
   WHERE UNIT = "C")
@@ -394,7 +396,7 @@ AS (SELECT *
 
 -- TODO
 
-<FILL-IN>
+create or replace temporary view celcius_temp
 AS (SELECT *
   FROM weather_managed
   WHERE UNIT = "C")
@@ -422,7 +424,7 @@ AS (SELECT *
 
 -- TODO
 
-<FILL-IN>
+create or replace global temp view celcius_global
 AS (SELECT *
   FROM weather_managed
   WHERE UNIT = "C")

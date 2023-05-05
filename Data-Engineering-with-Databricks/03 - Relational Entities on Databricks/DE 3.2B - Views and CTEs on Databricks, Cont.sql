@@ -169,6 +169,17 @@ FROM
 
 -- COMMAND ----------
 
+
+SELECT
+  count(*) AS `Total Flights from LAX to BOS`
+FROM
+  external_table
+   WHERE
+    origin = 'LAX'
+    AND destination = 'BOS'
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC
 -- MAGIC  
@@ -186,7 +197,7 @@ FROM
       FROM
         external_table
     )
-    SELECT
+    SELECT  
       *
     FROM
       delayed_flights

@@ -126,7 +126,7 @@ SELECT * FROM managed_table_in_db_with_default_location;
 
 -- COMMAND ----------
 
-DESCRIBE EXTENDED managed_table_in_db_with_default_location;
+DESCRIBE detail managed_table_in_db_with_default_location;
 
 -- COMMAND ----------
 
